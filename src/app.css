@@ -1,1 +1,18 @@
 @import 'tailwindcss';
+
+* {
+	box-sizing: border-box;
+	color: #000c00;
+}
+body {
+	background-color: #f6fff5;
+}
+.primary {
+	color: #77cdfe;
+}
+.secondary {
+	color: #0ffd07;
+}
+.accent {
+	color: #4c6afd;
+}
