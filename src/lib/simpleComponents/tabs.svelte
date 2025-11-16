@@ -1,34 +1,19 @@
 <script lang="ts">
-	let { tabs } = $props();
-	import { quintOut } from 'svelte/easing';
-	import { crossfade } from 'svelte/transition';
+	let { tabs, value = $bindable(0) } = $props();
 
-	const [send, receive] = crossfade({
-		duration: d => Math.sqrt(d * 200),
-
-		fallback(node, params) {
-			return {
-				duration: 600,
-				easing: quintOut,
-				css: t => `opacity: ${t}`
-			};
-		}
-	});
-
-	let selectedTab = $state(0);
-	let tabsContainer: HTMLDivElement;
-	let tabElements: HTMLDivElement[] = [];
+	let tabsContainer;
+	let tabElements = [];
 	let selectorPosition = $state({ left: 0, width: 0 });
 	
-	function selectTab(index: number) {
-		selectedTab = index;
+	function selectTab(index) {
+		value = index;
 	}
 	
 	function updateSelectorPosition() {
-		if (!tabsContainer || !tabElements[selectedTab]) return;
-		
+		if (!tabsContainer || !tabElements[value]) return;
+
 		const containerRect = tabsContainer.getBoundingClientRect();
-		const tabRect = tabElements[selectedTab].getBoundingClientRect();
+		const tabRect = tabElements[value].getBoundingClientRect();
 		
 		selectorPosition = {
 			left: tabRect.left - containerRect.left,
@@ -37,7 +22,7 @@
 	}
 	
 	$effect(() => {
-		selectedTab;
+		value;
 		updateSelectorPosition();
 	});
 </script>
@@ -45,7 +30,7 @@
 	{#each tabs as tab, i}
 		<div 
 			class="tab"
-			class:active={i === selectedTab}
+			class:active={i === value}
 			bind:this={tabElements[i]}
 			onclick={() => selectTab(i)}
 			onkeydown={(e) => e.key === 'Enter' && selectTab(i)}

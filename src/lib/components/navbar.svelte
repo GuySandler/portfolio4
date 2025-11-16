@@ -1,8 +1,9 @@
 <script>
 	import Tabs from '$lib/simpleComponents/tabs.svelte';
+	let { value = $bindable(0) } = $props();
 </script>
 <div id="navbar">
-	<Tabs tabs={[{text:"Home"}, {text:"Projects"}, {text: "Experience"},{text:"Contact"}]} />
+	<Tabs tabs={[{text:"Home"}, {text:"Projects"}, {text: "Experience"},{text:"Contact"}]} bind:value />
 </div>
 <style>
 	#navbar {

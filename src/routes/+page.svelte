@@ -1,11 +1,15 @@
 <script>
 	import Navbar from '$lib/components/navbar.svelte';
 	import Home from '$lib/components/home.svelte';
+	let tabIndex = $state(0);
 </script>
 <main>
-	<Navbar />
+	<Navbar bind:value={tabIndex} />
 	<main>
+		<!-- <h1>Current Tab: {tabIndex}</h1> -->
+		{#if tabIndex == 0}
 		<Home />
+		{/if}
 	</main>
 </main>
 <style>
