@@ -12,12 +12,17 @@
 	}
 	let dur = 700;
 	let yOffset = -20;
-
+	let isInitialLoad = $state(true);
+	
 	onMount(() => {
 		loadItems(2, 300);
+		// After initial mount, mark that we're no longer on initial load
+		setTimeout(() => {
+			isInitialLoad = false;
+		}, 100);
 	});
 </script>
-<div id="home" out:fly={{ y: yOffset, duration: dur }}>
+<div id="home" out:fly={{ y: yOffset, duration: dur }} in:fly={{ y: yOffset, duration: dur, delay: isInitialLoad ? 0 : dur }}>
 	{#if currentItems >= 1}
 	<div class="card" in:fly={{ y: yOffset, duration: dur }}>
 		<h1>Hi, I'm Guy Sandler</h1>
